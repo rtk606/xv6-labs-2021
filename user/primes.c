@@ -1,5 +1,5 @@
-#include "../kernel/types.h"
-#include "../user/user.h"
+#include "kernel/types.h"
+#include "user/user.h"
 
 #define RD 0        // stdin
 #define WR 1        // stdout

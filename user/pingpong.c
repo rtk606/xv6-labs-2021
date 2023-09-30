@@ -1,6 +1,6 @@
 /* pingpongs a byte between the parent and child process */
-#include "../kernel/types.h"
-#include "../user/user.h"
+#include "kernel/types.h"
+#include "user/user.h"
 
 int main(void) 
 {
