@@ -79,15 +79,10 @@ void find(const char* path, const char* target)
 }
 
 /*
-
     find - The program's name (argv[0]).
     . - The first argument (argv[1]).
     b - The second argument (argv[2]).
-
-
-
     Expected outputs:  
-
     $ make qemu
     ...
     init: starting sh
@@ -98,10 +93,8 @@ void find(const char* path, const char* target)
     ./b
     ./a/b
     $ 
-
     
     while(read(fd, &de, sizeof(de)) == sizeof(de))
-
     .               (refers to current directory)
     ..              (refers to parent directory)
     file1.txt

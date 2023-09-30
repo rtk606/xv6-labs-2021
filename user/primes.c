@@ -1,9 +1,9 @@
 #include "../kernel/types.h"
-#include "user.h"
+#include "../user/user.h"
 
-#define RD 0
-#define WR 1
-#define stderr 2
+#define RD 0        // stdin
+#define WR 1        // stdout
+#define stderr 2    // stderr
 
 void primes(int left_pipe[2]);
 
