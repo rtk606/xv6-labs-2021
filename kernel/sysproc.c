@@ -95,3 +95,18 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_trace(void) 
+{
+  int bitmask;
+
+  if (argint(0, &bitmask) < 0) {
+    printf("Error: failed to fetch system call argument.");
+    return -1;
+  }
+
+  myproc()->tracemask = bitmask;
+
+  return 0;
+}
