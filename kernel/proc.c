@@ -657,3 +657,35 @@ procdump(void)
     printf("\n");
   }
 }
+
+int
+procnum(void)
+{
+  int proc_cnt = 0;
+  for(struct proc *p = proc; p < &proc[NPROC]; p++) {
+    if(p->state != UNUSED)
+      proc_cnt++;
+  }
+  return proc_cnt;
+}
+
+// Get the number of processes in the system that are not in UNUSED state.
+// The count is stored in the memory location pointed to by nproc.
+// For each process in the proc array, the function acquires its lock,
+// checks its state, and releases the lock afterward to ensure we avoid race conditions.
+int 
+getnumprocesses(void)
+{
+    struct proc *p;
+    int count = 0;
+
+    for(p = proc; p < &proc[NPROC]; ++p) {
+        acquire(&p->lock);
+        if (p->state != UNUSED) {
+            ++count;
+        }
+        release(&p->lock);
+    }
+
+    return count;
+}

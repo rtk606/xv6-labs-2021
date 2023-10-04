@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
 
 uint64
 sys_exit(void)
@@ -107,6 +108,27 @@ sys_trace(void)
   }
 
   myproc()->tracemask = bitmask;
+
+  return 0;
+}
+
+uint64
+sys_sysinfo(void) 
+{
+  struct sysinfo systeminformation;
+  uint64 useraddress;  // Address in user space to copy the sysinfo data to
+
+  if (argaddr(0, &useraddress) < 0) {
+    return -1;
+  }
+
+  systeminformation.freemem = kgetfreememory();  // physical memory
+  systeminformation.nproc = getnumprocesses();   // # of processes that are not in the UNUSED state i.e. [RUNNING, RUNNABLE, SLEEPING]
+
+  // copy the populated systeminformation struct to user space
+  if (copyout(myproc()->pagetable, useraddress, (char *)&systeminformation, sizeof(systeminformation)) < 0) {
+    return -1;
+  }
 
   return 0;
 }
