@@ -73,6 +73,10 @@
 #ifdef LAB_PGTBL
 #define USYSCALL (TRAPFRAME - PGSIZE)
 
+
+// This struct is used to store data between the user space and kernel space
+// without syscalls, thereby optimizing and speeding up operations
+// it is shared by both the user and kernel
 struct usyscall {
   int pid;  // Process ID
 };

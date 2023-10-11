@@ -432,3 +432,26 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
     return -1;
   }
 }
+
+static void print_page_table(pagetable_t pagetable, int depth) {
+  // Use the macro definitions from kernel/riscv.h to navigate through the page table entries.
+  for (int i = 0; i < 512; ++i) {
+      pte_t pte = pagetable[i];
+        if (pte & PTE_V) {  // Only interested in valid entries
+            for (int j = 0; j < depth; ++j) {
+                printf(" ..");
+            }
+            printf("%d: pte %p pa %p\n", i, pte, PTE2PA(pte));
+            if ((pte & PTE_R) == 0 && (pte & PTE_W) == 0 && (pte & PTE_X) == 0) {
+                // This is an internal node, not a leaf PTE, so recursively print its entries.
+                print_page_table((pagetable_t)PTE2PA(pte), depth + 1);
+            }
+        }
+    }
+}
+
+void vmprint(pagetable_t pagetable) {
+  
+    printf("page table %p\n", pagetable);
+    print_page_table(pagetable, 0);
+}
