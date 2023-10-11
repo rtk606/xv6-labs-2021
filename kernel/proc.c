@@ -128,7 +128,7 @@ found:
   }
 
   // Allocates a usyscall page.
-  if ((p->usyscall = (struct usyscall *)kalloc()) == 0) {
+  if ((p->usyscall = (struct usyscall *)kalloc()) == 0) { // kalloc returns void* need to cast
     freeproc(p);
     release(&p->lock);
     return 0;
